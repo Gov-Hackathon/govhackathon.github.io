@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gov Hackathon™ - Secure Innovation for the Public Sector</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s ease-out;
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        .animate-slide-down {
+            animation: slide-down 0.3s ease-out;
+        }
+        @keyframes slide-down {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #06b6d4;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(99, 102, 241, 0.15), transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(6, 182, 212, 0.15), transparent 50%);
+            pointer-events: none;
+        }
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        .card-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .card-hover:hover::before {
+            opacity: 1;
+        }
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .glow {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            margin: 4rem 0;
+        }
+        .icon-bounce {
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        .aurora {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                rgba(99, 102, 241, 0.1), 
+                rgba(6, 182, 212, 0.1), 
+                rgba(245, 158, 11, 0.1));
+            filter: blur(60px);
+            animation: aurora 20s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes aurora {
+            0% { transform: rotate(0deg) scale(1.5); }
+            50% { transform: rotate(180deg) scale(2); }
+            100% { transform: rotate(360deg) scale(1.5); }
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            animation: particle-float 15s linear infinite;
+        }
+        @keyframes particle-float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-lg shadow-lg border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <span class="text-3xl font-black gradient-text pulse-animation">🏛️ Gov Hackathon™</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#features" class="text-gray-700 hover:text-blue-600 transition-all duration-300 font-medium relative group">
+                        Features
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#pricing" class="text-gray-700 hover:text-blue-600 transition-all duration-300 font-medium relative group">
+                        Pricing
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#use-cases" class="text-gray-700 hover:text-blue-600 transition-all duration-300 font-medium relative group">
+                        Use Cases
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-600 transition-all duration-300 font-medium relative group">
+                        Contact
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+                <button class="md:hidden text-gray-700 hover:text-blue-600 transition-colors">
+                    <i data-feather="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-lg border-t border-gray-200">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#features" class="block py-3 text-gray-700 hover:text-blue-600 transition-colors font-medium">Features</a>
+                <a href="#pricing" class="block py-3 text-gray-700 hover:text-blue-600 transition-colors font-medium">Pricing</a>
+                <a href="#use-cases" class="block py-3 text-gray-700 hover:text-blue-600 transition-colors font-medium">Use Cases</a>
+                <a href="#contact" class="block py-3 text-gray-700 hover:text-blue-600 transition-colors font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden hero-bg">
+        <div class="aurora"></div>
+        <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="mb-8" data-aos="fade-up">
+                <span class="inline-block bg-white/20 backdrop-blur-lg text-white px-6 py-3 rounded-full text-sm font-semibold glass border border-white/30 float-animation">
+                    <span class="icon-bounce">✨</span> Trusted by 50+ Government Agencies
+                </span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight" data-aos="fade-up" data-aos-delay="100">
+                Gov Hackathon™
+            </h1>
+            <p class="text-2xl md:text-4xl font-light text-gray-200 mb-6" data-aos="fade-up" data-aos-delay="200">
+                Secure Innovation for the Public Sector
+            </p>
+            <p class="text-xl text-gray-300 mb-10 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="300">
+                A sandbox-powered platform to run government-grade hackathons, pilots, and challenges.
+                <br><strong class="text-white">Compliant. Isolated. Ready for AI, RAG, and real-world datasets.</strong>
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center" data-aos="fade-up" data-aos-delay="400">
+                <button class="btn-primary text-white px-10 py-4 rounded-xl font-bold text-lg shadow-2xl glow">
+                    🚀 Host a Hackathon
+                </button>
+                <button class="glass text-white px-10 py-4 rounded-xl font-bold text-lg border-2 border-white/50 hover:bg-white/20 transition-all duration-300">
+                    🤝 Partner with Us
+                </button>
+                <button class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-10 py-4 rounded-xl font-bold text-lg shadow-2xl">
+                    📋 View Use Cases
+                </button>
+            </div>
+            <div class="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="500">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-white mb-2">50+</div>
+                    <div class="text-gray-300">Hackathons</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-white mb-2">1000+</div>
+                    <div class="text-gray-300">Participants</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-white mb-2">95%</div>
+                    <div class="text-gray-300">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Gov Hackathon Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-aos="fade-up">
+                🚨 Why Gov Hackathon™?
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h3 class="text-2xl font-semibold mb-6 text-red-600">Public sector innovation is blocked by:</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <span class="text-red-500 mr-3">❌</span>
+                            <span>Legacy infrastructure</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-red-500 mr-3">❌</span>
+                            <span>Procurement bottlenecks</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-red-500 mr-3">❌</span>
+                            <span>Vendor lock-in</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-red-500 mr-3">❌</span>
+                            <span>Lack of secure experimentation environments</span>
+                        </div>
+                    </div>
+                </div>
+                <div data-aos="fade-left">
+                    <h3 class="text-2xl font-semibold mb-6 text-green-600">Gov Hackathon™ changes that:</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3">✅</span>
+                            <span>Secure, isolated sandboxes</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3">✅</span>
+                            <span>No vendor lock-in, BYO model/API/data</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3">✅</span>
+                            <span>Compliance-ready infrastructure</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3">✅</span>
+                            <span>Real-world AI use cases</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-3">✅</span>
+                            <span>Outcomes, not just ideas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who Is It For Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-aos="fade-up">
+                👥 Who Is It For?
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-blue-600 text-2xl mb-4">🏛️</div>
+                    <h3 class="text-xl font-semibold mb-2">Central & Local Government</h3>
+                    <p class="text-gray-600">Digital transformation & AI policy testing</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-red-600 text-2xl mb-4">🏥</div>
+                    <h3 class="text-xl font-semibold mb-2">Health Authorities (e.g., NHS)</h3>
+                    <p class="text-gray-600">AI for triage, records, operational insight</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-purple-600 text-2xl mb-4">⚖️</div>
+                    <h3 class="text-xl font-semibold mb-2">Regulatory Bodies</h3>
+                    <p class="text-gray-600">Compliance automation, sandboxed validation</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-green-600 text-2xl mb-4">🛡️</div>
+                    <h3 class="text-xl font-semibold mb-2">National Security & Defence</h3>
+                    <p class="text-gray-600">RAG use cases in secure/air-gapped infra</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="500">
+                    <div class="text-yellow-600 text-2xl mb-4">💼</div>
+                    <h3 class="text-xl font-semibold mb-2">Public Procurement Teams</h3>
+                    <p class="text-gray-600">Evaluate vendor tools under live conditions</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="600">
+                    <div class="text-indigo-600 text-2xl mb-4">🔬</div>
+                    <h3 class="text-xl font-semibold mb-2">Academic + Research Labs</h3>
+                    <p class="text-gray-600">GovTech and public interest R&D</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <span class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                    🔧 Enterprise-Ready Infrastructure
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    🧱 What's Inside Each Sandbox?
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Government-grade technology stack with military-grade security and compliance
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-blue-600 text-4xl mb-4">🗄️</div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Vector DBs</h3>
+                    <p class="text-gray-600 mb-4">High-performance vector databases for semantic search and AI applications</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs">Scalable</span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs">Fast</span>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-purple-600 text-4xl mb-4">🤖</div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">AI/RAG Pipelines</h3>
+                    <p class="text-gray-600 mb-4">Advanced language models and retrieval-augmented generation systems</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs">Advanced</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs">Secure</span>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-green-600 text-4xl mb-4">🔗</div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Embedding APIs</h3>
+                    <p class="text-gray-600 mb-4">Flexible embedding systems for text, images, and multimodal data</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs">Flexible</span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs">Powerful</span>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-yellow-600 text-4xl mb-4">📄</div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">File Ingestion</h3>
+                    <p class="text-gray-600 mb-4">Support for documents, images, audio, and structured data formats</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs">Complete</span>
+                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs">Smart</span>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="500">
+                    <div class="text-red-600 text-4xl mb-4">⏱️</div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Workflow Orchestration</h3>
+                    <p class="text-gray-600 mb-4">Secure job execution and workflow management</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs">Reliable</span>
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs">Fast</span>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="600">
+                    <div class="text-indigo-600 text-4xl mb-4">👥</div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Access Controls</h3>
+                    <p class="text-gray-600 mb-4">Granular role-based access for teams, auditors, and observers</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs">Secure</span>
+                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs">Granular</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 text-center" data-aos="fade-up">
+                <div class="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">🚀 Powered by Gov Sandbox™</h3>
+                    <p class="text-gray-600">
+                        Our hardened platform built specifically for public sector needs with 
+                        <strong class="text-blue-600">military-grade security</strong> and 
+                        <strong class="text-purple-600">full compliance</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-aos="fade-up">
+                🛡️ Security & Compliance
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-4xl mb-4">🔒</div>
+                    <h3 class="text-xl font-semibold mb-2">Isolated EC2 deployments</h3>
+                </div>
+                <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-4xl mb-4">🔐</div>
+                    <h3 class="text-xl font-semibold mb-2">RBAC, tokenized API access</h3>
+                </div>
+                <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-4xl mb-4">👔</div>
+                    <h3 class="text-xl font-semibold mb-2">Compliance-ready auditing</h3>
+                </div>
+                <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-4xl mb-4">🇬🇧</div>
+                    <h3 class="text-xl font-semibold mb-2">Hosted in UK Gov Cloud</h3>
+                </div>
+                <div class="text-center" data-aos="fade-up" data-aos-delay="500">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-semibold mb-2">CISO visibility dashboard</h3>
+                </div>
+                <div class="text-center" data-aos="fade-up" data-aos-delay="600">
+                    <div class="text-4xl mb-4">📴</div>
+                    <h3 class="text-xl font-semibold mb-2">Air-gapped deployments</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-aos="fade-up">
+                🏁 Use Case Tracks
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-800">GovDocs Copilot</h3>
+                    <p class="text-gray-700">Chatbot over policies, procedures, manuals</p>
+                </div>
+                <div class="bg-gradient-to-br from-green-50 to-teal-50 p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-semibold mb-3 text-green-800">HealthRAG</h3>
+                    <p class="text-gray-700">Semantic search over NHS records or patient journeys</p>
+                </div>
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-xl font-semibold mb-3 text-purple-800">RegTech Builders</h3>
+                    <p class="text-gray-700">Automate risk, compliance, or audit reporting</p>
+                </div>
+                <div class="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-xl font-semibold mb-3 text-red-800">CyberAI</h3>
+                    <p class="text-gray-700">Threat vector classification & memory over logs</p>
+                </div>
+                <div class="bg-gradient-to-br from-yellow-50 to-amber-50 p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="500">
+                    <h3 class="text-xl font-semibold mb-3 text-yellow-800">Policy Simulator</h3>
+                    <p class="text-gray-700">Model the impact of new legislation via AI</p>
+                </div>
+                <div class="bg-gradient-to-br from-indigo-50 to-blue-50 p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="600">
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-800">Public Service Copilots</h3>
+                    <p class="text-gray-700">GPT assistants for DWP, HMRC, etc.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-aos="fade-up">
+                💰 Pricing Plans
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-2 border-blue-200" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Gov Mini Hackathon</h3>
+                    <p class="text-3xl font-bold mb-2">£14,995</p>
+                    <p class="text-gray-600 mb-4">2 days</p>
+                    <ul class="text-sm text-gray-700 space-y-2">
+                        <li>✅ Up to 5 teams</li>
+                        <li>✅ Onboarding</li>
+                        <li>✅ Prebuilt tracks</li>
+                    </ul>
+                    <button class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors">
+                        Get Started
+                    </button>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-2 border-purple-200" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold mb-4 text-purple-600">RegTech Pilot Sprint</h3>
+                    <p class="text-3xl font-bold mb-2">£34,995</p>
+                    <p class="text-gray-600 mb-4">1 week</p>
+                    <ul class="text-sm text-gray-700 space-y-2">
+                        <li>✅ Audit support</li>
+                        <li>✅ Internal infra integration</li>
+                        <li>✅ Advanced features</li>
+                    </ul>
+                    <button class="w-full mt-6 bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-colors">
+                        Get Started
+                    </button>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-2 border-green-200 transform scale-105 relative overflow-visible" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-4 py-1 rounded-full text-sm font-semibold z-10">
+                        Most Popular
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-green-600">Gov RAG Challenge</h3>
+                    <p class="text-3xl font-bold mb-2">£64,995+</p>
+                    <p class="text-gray-600 mb-4">2 weeks</p>
+                    <ul class="text-sm text-gray-700 space-y-2">
+                        <li>✅ Advanced compliance</li>
+                        <li>✅ Premium support</li>
+                        <li>✅ Partner APIs</li>
+                    </ul>
+                    <button class="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition-colors">
+                        Get Started
+                    </button>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-2 border-gray-300" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-xl font-bold mb-4 text-gray-700">Closed-Door Hackathon</h3>
+                    <p class="text-3xl font-bold mb-2">£100K+</p>
+                    <p class="text-gray-600 mb-4">Custom</p>
+                    <ul class="text-sm text-gray-700 space-y-2">
+                        <li>✅ Air-gapped deployment</li>
+                        <li>✅ National security</li>
+                        <li>✅ Full customization</li>
+                    </ul>
+                    <button class="w-full mt-6 bg-gray-700 hover:bg-gray-800 text-white py-2 rounded-lg transition-colors">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+            <div class="mt-12 text-center" data-aos="fade-up">
+                <p class="text-gray-600">
+                    All plans include sandbox setup, support, onboarding, and compliance-ready audit dashboard.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Hackathons -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-aos="fade-up">
+                📆 Upcoming Hackathons
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-lg font-semibold mb-2">NHS AI Triage Pilot</h3>
+                    <p class="text-sm text-gray-600 mb-2">Healthcare</p>
+                    <p class="text-sm text-gray-600 mb-4">Oct 2025</p>
+                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Register Now</span>
+                </div>
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-lg font-semibold mb-2">RegulationGPT</h3>
+                    <p class="text-sm text-gray-600 mb-2">FCA/Ofgem</p>
+                    <p class="text-sm text-gray-600 mb-4">Nov 2025</p>
+                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">Closed Track</span>
+                </div>
+                <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-lg font-semibold mb-2">AI for Courts</h3>
+                    <p class="text-sm text-gray-600 mb-2">Justice</p>
+                    <p class="text-sm text-gray-600 mb-4">Dec 2025</p>
+                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Waitlist</span>
+                </div>
+                <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-6 rounded-lg shadow-lg card-hover" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-lg font-semibold mb-2">LocalGovGPT</h3>
+                    <p class="text-sm text-gray-600 mb-2">Gov Digital</p>
+                    <p class="text-sm text-gray-600 mb-4">Jan 2026</p>
+                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Applications Open</span>
+                </div>
+            </div>
+            <div class="mt-12 text-center flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors card-hover">
+                    Host Your Own
+                </button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors card-hover">
+                    Partner With Us
+                </button>
+                <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors card-hover">
+                    Join a Public Track
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-900 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6" data-aos="fade-up">
+                📬 Get Started
+            </h2>
+            <p class="text-xl text-gray-300 mb-8" data-aos="fade-up" data-aos-delay="100">
+                Want to validate AI in a compliant sandbox?<br>
+                Need to run a government-grade challenge?<br>
+                Seeking partners or infra to power your GovTech sprint?
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors card-hover">
+                    Schedule a Demo
+                </button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors card-hover">
+                    Request Hackathon Plan
+                </button>
+                <button class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors card-hover">
+                    Partner with Us
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">🏛️ Gov Hackathon™</h3>
+                    <p class="text-gray-400 text-sm">
+                        Secure innovation for the public sector
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#features" class="hover:text-white">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-white">Pricing</a></li>
+                        <li><a href="#use-cases" class="hover:text-white">Use Cases</a></li>
+                        <li><a href="#contact" class="hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white">API Reference</a></li>
+                        <li><a href="#" class="hover:text-white">Compliance</a></li>
+                        <li><a href="#" class="hover:text-white">Security</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white">Compliance Policy</a></li>
+                        <li><a href="#" class="hover:text-white">Partner Program</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>© 2025 Gov Hackathon™. All rights reserved.</p>
+                <p class="mt-2">Powered by Vector Database Cloud™ and Gov Sandbox™. Hosted in the UK.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize AOS with enhanced settings
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 120,
+            easing: 'ease-out-cubic'
+        });
+
+        // Initialize Feather Icons
+        feather.replace();
+
+
+        // Mobile menu toggle with animation
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('animate-slide-down');
+        }
+
+        // Smooth scrolling for anchor links with offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 100;
+                    const targetPosition = target.offsetTop - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation with enhanced styling
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-xl');
+                nav.classList.add('bg-white/95');
+            } else {
+                nav.classList.remove('shadow-xl');
+                nav.classList.remove('bg-white/95');
+            }
+        });
+
+
+
+        // Create floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.width = Math.random() * 6 + 3 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 15000);
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 3000);
+
+        // Add hover effects to cards
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add click effects to buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+    </script>
+</body>
+</html>
